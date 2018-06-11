@@ -34,10 +34,18 @@ describe("MergeSort function", function () {
   it("sorts the array", function () {
     let array = [4, 2, 7, 8, 1];
     expect(mergeSort(array)).toEqual([1, 2, 4, 7, 8]);
-  })
+  });
   it("sorts another array", function () {
     let array = [2, 3, 1];
     expect(mergeSort(array)).toEqual([1, 2, 3]);
-  })
+  });
+  it("can take a comparator function", function(){
+    var comp = function (a, b) {
+      if (a.age > b.age) return true; // returning `-1` means "a goes before b"
+      if (a.age < b.age) return false;  // returning  `1` means "b goes before a"
+      return 0; // returning 0 means "a and b are equivalent"
+    };
+    expect( mergeSort([{ age: 4 }, { age: 8 }, { age: 2 }, { age: 9 }], comp)).toEqual([{ age: 2 }, { age: 4 }, { age: 8 }, { age: 9 }]);
+  });
 });
 

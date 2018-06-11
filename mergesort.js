@@ -8,8 +8,13 @@ function split(arr) {
   return [leftArray, rightArray];
 }
 
-function merge(leftArray, rightArray) { //[2,3], [1]
+function merge(leftArray, rightArray, comparator) { //[2,3], [1]
   // merges two sorted arrays into one sorted array
+  if (!comparator){
+    comparator = (a, b) => {
+      return a < b;
+    }
+  }
 
   let leftPointer = 0;
   let rightPointer = 0;
@@ -18,8 +23,7 @@ function merge(leftArray, rightArray) { //[2,3], [1]
 
     let leftValue = leftArray[leftPointer];
     let rightValue = rightArray[rightPointer];
-
-    if (leftValue < rightValue || !rightValue) {
+    if ( leftValue && ( !rightValue || comparator(leftValue, rightValue) ) ) {
       result.push(leftValue);
       leftPointer += 1;
     } else {
@@ -30,7 +34,8 @@ function merge(leftArray, rightArray) { //[2,3], [1]
   return result;
 }
 
-function mergeSort(arrayToBeSorted) {
+function mergeSort(arrayToBeSorted, comparator ) {
+
   if (arrayToBeSorted.length <= 1) {
     return arrayToBeSorted;
   }
@@ -42,5 +47,5 @@ function mergeSort(arrayToBeSorted) {
   let sortedLeftArray = mergeSort(leftArray);
   let sortedRightArray = mergeSort(rightArray);
 
-  return merge(sortedLeftArray, sortedRightArray);
+  return merge(sortedLeftArray, sortedRightArray, comparator);
 }
